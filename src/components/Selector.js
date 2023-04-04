@@ -1,6 +1,6 @@
 const Selector = (props) => {
   return (
-    <div>
+    <div className="selector-container">
       <select onChange={(e) => props.setCountry(e.target.value)}>
         {props.countriesJson.map((country, index) => (
           <option key={index} value={country.Slug}>
