@@ -1,11 +1,14 @@
-const Selector = () => {
+const Selector = (props) => {
   return (
     <div>
-      <select>
-        <option>United States</option>
-        <option>China</option>
-        <option>Japan</option>
+      <select onChange={(e) => props.setCountry(e.target.value)}>
+        {props.countriesJson.map((country, index) => (
+          <option key={index} value={country.Slug}>
+            {country.Country}
+          </option>
+        ))}
       </select>
+      <button onClick={props.getCountryData}>Get Data</button>
     </div>
   );
 };
