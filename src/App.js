@@ -15,7 +15,6 @@ function App() {
     totalRecovered: "",
   });
   const [allCountriesData, setAllCountriesData] = useState([]);
-
   const getCountryData = () => {
     fetch(
       `https://monotein-books.vercel.app/api/corona-tracker/country/${country}`
@@ -33,7 +32,6 @@ function App() {
         })
       );
   };
-
   useEffect(() => {
     fetch("https://monotein-books.vercel.app/api/corona-tracker/summary")
       .then((res) => res.json())
