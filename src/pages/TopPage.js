@@ -1,6 +1,6 @@
 import Title from "../components/Title";
 import Selector from "../components/Selector";
-// import Results from "../components/Results";
+import Results from "../components/Results";
 
 const TopPage = (props) => {
   return (
@@ -11,6 +11,7 @@ const TopPage = (props) => {
         setCountry={props.setCountry}
         getCountryData={props.getCountryData}
       />
+      <Results countryData={props.countryData} />
     </div>
   );
 };
