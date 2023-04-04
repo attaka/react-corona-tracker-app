@@ -31,6 +31,7 @@ function App() {
           totalRecovered: data[data.length - 1].Recovered,
         })
       );
+    // .catch((err) => alert("error ocurred! reload page again"));
   };
   useEffect(() => {
     fetch("https://monotein-books.vercel.app/api/corona-tracker/summary")
