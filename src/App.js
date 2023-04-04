@@ -7,7 +7,7 @@ import "./App.css";
 
 function App() {
   const [loading, setLoading] = useState(false);
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("japan");
   const [countryData, setCountryData] = useState({
     date: "",
     newConfirmed: "",
@@ -16,33 +16,40 @@ function App() {
     totalRecovered: "",
   });
   const [allCountriesData, setAllCountriesData] = useState([]);
-  const getCountryData = () => {
-    setLoading(true);
-    fetch(
-      `https://monotein-books.vercel.app/api/corona-tracker/country/${country}`
-    )
-      .then((res) => res.json())
-      .then(
-        (data) =>
-          setCountryData({
-            date: data[data.length - 1].Date,
-            newConfirmed:
-              data[data.length - 1].Confirmed - data[data.length - 2].Confirmed,
-            totalConfirmed: data[data.length - 1].Confirmed,
-            newRecovered:
-              data[data.length - 1].Recovered - data[data.length - 2].Recovered,
-            totalRecovered: data[data.length - 1].Recovered,
-          }),
-        setLoading(false)
+
+  useEffect(() => {
+    const getCountryData = () => {
+      setLoading(true);
+      fetch(
+        `https://monotein-books.vercel.app/api/corona-tracker/country/${country}`
       )
-      .catch((err) => alert("error ocurred! reload page again"));
-  };
+        .then((res) => res.json())
+        .then(
+          (data) =>
+            setCountryData({
+              date: data[data.length - 1].Date,
+              newConfirmed:
+                data[data.length - 1].Confirmed -
+                data[data.length - 2].Confirmed,
+              totalConfirmed: data[data.length - 1].Confirmed,
+              newRecovered:
+                data[data.length - 1].Recovered -
+                data[data.length - 2].Recovered,
+              totalRecovered: data[data.length - 1].Recovered,
+            }),
+          setLoading(false)
+        )
+        .catch((err) => alert("error ocurred! reload page again"));
+    };
+    getCountryData();
+  }, [country]);
   useEffect(() => {
     fetch("https://monotein-books.vercel.app/api/corona-tracker/summary")
       .then((res) => res.json())
       .then((data) => setAllCountriesData(data.Countries))
       .catch((err) => alert("error ocurred! reload page again"));
   }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -52,7 +59,6 @@ function App() {
             <TopPage
               countriesJson={countriesJson}
               setCountry={setCountry}
-              getCountryData={getCountryData}
               countryData={countryData}
               loading={loading}
             />
